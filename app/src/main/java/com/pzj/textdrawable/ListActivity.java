@@ -116,7 +116,7 @@ public class ListActivity extends ActionBarActivity {
                 holder.checkIcon.setVisibility(View.VISIBLE);
             }
             else {
-                TextDrawable drawable = mDrawableBuilder.build(String.valueOf(item.data.charAt(0)), mColorGenerator.getColor(item.data), Color.WHITE);
+                TextDrawable drawable = mDrawableBuilder.build(item.data, mColorGenerator.getColor(item.data), Color.WHITE);
                 holder.imageView.setImageDrawable(drawable);
                 holder.view.setBackgroundColor(Color.TRANSPARENT);
                 holder.checkIcon.setVisibility(View.GONE);

@@ -87,7 +87,7 @@ public class TextDrawable extends ShapeDrawable {
         Rect r = getBounds();
 
         // draw border
-        if (borderThickness > 0) {
+        if (this.borderThickness > 0) {
             drawBorder(canvas);
         }
 
@@ -98,35 +98,35 @@ public class TextDrawable extends ShapeDrawable {
         int width = this.width < 0 ? r.width() : this.width;
         int height = this.height < 0 ? r.height() : this.height;
         int fontSize = this.fontSize < 0 ? (Math.min(width, height) / 2) : this.fontSize;
-        textPaint.setTextSize(fontSize);
-        canvas.drawText(text, width / 2, height / 2 - ((textPaint.descent() + textPaint.ascent()) / 2), textPaint);
+        this.textPaint.setTextSize(fontSize);
+        canvas.drawText(this.text, width / 2, height / 2 - ((this.textPaint.descent() + this.textPaint.ascent()) / 2), this.textPaint);
 
         canvas.restoreToCount(count);
     }
 
     private void drawBorder(Canvas canvas) {
         RectF rect = new RectF(getBounds());
-        rect.inset(borderThickness / 2, borderThickness / 2);
+        rect.inset(this.borderThickness / 2, this.borderThickness / 2);
 
-        if (shape instanceof OvalShape) {
-            canvas.drawOval(rect, borderPaint);
+        if (this.shape instanceof OvalShape) {
+            canvas.drawOval(rect, this.borderPaint);
         }
-        else if (shape instanceof RoundRectShape) {
-            canvas.drawRoundRect(rect, radius, radius, borderPaint);
+        else if (this.shape instanceof RoundRectShape) {
+            canvas.drawRoundRect(rect, this.radius, this.radius, this.borderPaint);
         }
         else {
-            canvas.drawRect(rect, borderPaint);
+            canvas.drawRect(rect, this.borderPaint);
         }
     }
 
     @Override
     public void setAlpha(int alpha) {
-        textPaint.setAlpha(alpha);
+        this.textPaint.setAlpha(alpha);
     }
 
     @Override
     public void setColorFilter(ColorFilter cf) {
-        textPaint.setColorFilter(cf);
+        this.textPaint.setColorFilter(cf);
     }
 
     @Override
@@ -136,12 +136,12 @@ public class TextDrawable extends ShapeDrawable {
 
     @Override
     public int getIntrinsicWidth() {
-        return width;
+        return this.width;
     }
 
     @Override
     public int getIntrinsicHeight() {
-        return height;
+        return this.height;
     }
 
     public static IShapeBuilder builder() {
@@ -150,42 +150,31 @@ public class TextDrawable extends ShapeDrawable {
 
     public static class Builder implements IConfigBuilder, IShapeBuilder, IBuilder {
 
-        private String text;
-
-        public int textColor;
-
-        private int bgColor;
-
-        private int borderThickness;
-
-        private int width;
-
-        private int height;
-
-        private Typeface font;
-
+        private String    text;
+        private int       textColor;
+        private int       bgColor;
+        private int       borderThickness;
+        private int       width;
+        private int       height;
+        private int       fontSize;
+        private boolean   isBold;
+        private boolean   toUpperCase;
+        private float     radius;
+        private Typeface  font;
         private RectShape shape;
 
-        private int fontSize;
-
-        private boolean isBold;
-
-        private boolean toUpperCase;
-
-        public float radius;
-
         private Builder() {
-            text = "";
-            bgColor = Color.GRAY;
-            textColor = Color.WHITE;
-            borderThickness = 0;
-            width = -1;
-            height = -1;
-            shape = new RectShape();
-            font = Typeface.create("sans-serif-light", Typeface.NORMAL);
-            fontSize = -1;
-            isBold = false;
-            toUpperCase = false;
+            this.text = "";
+            this.bgColor = Color.GRAY;
+            this.textColor = Color.WHITE;
+            this.borderThickness = 0;
+            this.width = -1;
+            this.height = -1;
+            this.shape = new RectShape();
+            this.font = Typeface.create("sans-serif-light", Typeface.NORMAL);
+            this.fontSize = -1;
+            this.isBold = false;
+            this.toUpperCase = false;
         }
 
         public IConfigBuilder width(int width) {
@@ -278,6 +267,9 @@ public class TextDrawable extends ShapeDrawable {
 
         @Override
         public TextDrawable build(String text, int textColor, int bgColor) {
+            if (text != null && !"".equals(text)) {
+                text = text.substring(0, 1);    // 截取第一个字符
+            }
             this.text = text;
             this.textColor = textColor;
             this.bgColor = bgColor;
