@@ -5,3 +5,5 @@
 - 可以设置头像的字符颜色；
 
 参考：https://github.com/amulyakhare/TextDrawable
+
+![效果图](https://github.com/pengzhenjin/TextDrawable/blob/master/snapshot/1.gif)
